@@ -75,6 +75,11 @@ namespace MeterReaderWeb
                   pattern: "{controller=Home}/{action=Index}/{id?}");
         endpoints.MapRazorPages();
       });
+      
+      using (IServiceScope scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+      {
+        scope.ServiceProvider.GetService<ReadingContext>().Database.Migrate();
+      }
     }
   }
 }
